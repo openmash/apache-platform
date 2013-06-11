@@ -1,0 +1,336 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.talend.se.platform</groupId>
+    <artifactId>tesb</artifactId>
+    <packaging>pom</packaging>
+
+    <parent>
+        <groupId>com.talend.se.platform</groupId>
+        <artifactId>apache-esb</artifactId>
+        <version>5.2.2-SNAPSHOT</version>
+        <relativePath>../../apache/apache-esb/pom.xml</relativePath>
+    </parent>
+
+    <name>tesb-platform</name>
+<description>This is a platform pom that uses dependencyManagement imports 
+of apache parent poms from the component Apache projects to establish a
+consistent set of dependency versions for use by apps being built on the Talend
+ESB.  It does have not dependency management features of its own with the
+exception of tweaking the spring framework to exclude commons logging.</description>
+
+    <prerequisites>
+        <maven>2.2.1</maven>
+    </prerequisites>
+
+        
+    <repositories>
+        <repository>
+            <url>http://repo1.maven.org/maven2/</url>
+            <id>junit_4</id>
+            <layout>default</layout>
+            <name>Repository for library Library[junit_4]</name>
+        </repository>
+    </repositories>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- talend-esb properties -->
+        <tesb.version>5.2.2</tesb.version>
+        <cxf.version>2.7.3</cxf.version>
+        <camel.version>2.10.2</camel.version>
+        <activemq.version>5.7.0</activemq.version>
+        <spring.version>3.0.7.RELEASE</spring.version>
+        <karaf.version>2.2.9</karaf.version>
+        <zookeeper.version>3.3.6</zookeeper.version>
+        <derby.version>10.8.1.2</derby.version>
+        <slf4j.version>1.6.3</slf4j.version>
+        <commons-lang.version>2.6</commons-lang.version>
+        <commons-jxpath.version>1.3</commons-jxpath.version>
+        <dom4j.bundle.version>1.6.1_5</dom4j.bundle.version>
+        <jaxen.bundle.version>1.1.1_2</jaxen.bundle.version>
+        <javax.servlet.version>2.5</javax.servlet.version>
+        <commons-pool.version>1.6</commons-pool.version>
+        <commons-dbcp.version>1.4</commons-dbcp.version>
+        <gson.version>1.7.1</gson.version>
+        <commons-collections.version>3.2.1</commons-collections.version>
+        <commons-beanutils.version>1.8.3</commons-beanutils.version>
+        <jdom.bundle.version>1.1_4</jdom.bundle.version>
+        <commons-fileupload.version>1.2.2</commons-fileupload.version>
+        <commons-io.bundle.version>1.4_2</commons-io.bundle.version>
+        <osgi.core.version>4.2.0</osgi.core.version>
+        <osgi.compendium.version>4.2.0</osgi.compendium.version>
+        <jetty.version>7.6.7.v20120910</jetty.version>
+        <derby.servicemix.version>10.8.1.2_1</derby.servicemix.version>
+        <pax-web-jsp.version>1.1.4</pax-web-jsp.version>
+        <oscache.bundle.version>2.4_5</oscache.bundle.version>
+        <ibatis-sqlmap.bundle.version>2.3.4.726_4</ibatis-sqlmap.bundle.version>
+        <jolokia.version>1.0.4</jolokia.version>
+        <h2database.version>1.3.165</h2database.version>
+        <log4j.version>1.2.17</log4j.version>
+        <!-- this is the Talend ESB version for cxf.build-utils, which is
+        lower than the that used in cxf-2.7.3 itself -->
+        <!-- cxf.build-utils.version>2.4.0</cxf.build-utils.version -->
+
+        <!-- cxf properties -->
+        <cxf.build-utils.version>2.5.0</cxf.build-utils.version>
+        <cxf.xjc-utils.version>2.6.1</cxf.xjc-utils.version>
+
+        <!-- build plugin versions -->
+        <maven-compiler-plugin.version>2.5.1</maven-compiler-plugin.version>
+        <felix.version>2.3.7</felix.version>
+        <maven-bundle-plugin.version>2.3.7</maven-bundle-plugin.version>
+        <maven-resources-plugin.version>2.6</maven-resources-plugin.version> 
+        <maven-war-plugin.version>2.3</maven-war-plugin.version>
+    
+    
+        <javaee-web-api.version>7.0</javaee-web-api.version>
+
+        <!-- additiona build and test tools -->
+        <jetty-maven-plugin.version>${jetty.version}</jetty-maven-plugin.version>
+        <tomcat-maven-plugin.version>2.1</tomcat-maven-plugin.version>
+        
+    </properties>
+    
+    <dependencyManagement>
+        <dependencies>
+            <!-- Begin Spring -->
+
+            <!-- Most of Spring dependencies are covered via talend esb imports,
+                 they are included here for reference when adding the actual
+                 dependencies.  Therefore most of them are commented out.  Those
+                 not commented out are additions or variations from the default.
+            -->
+
+            <!--
+                Application Context (depends on spring-core, spring-expression, 
+                spring-aop, spring-beans)  This is the central artifact for 
+                Spring's Dependency Injection Container and is generally always
+                defined
+            -->
+            <!-- dependency>
+              <groupId>org.springframework</groupId>
+              <artifactId>spring-context</artifactId>
+              <version>${org.springframework.version}</version>
+            </dependency -->
+
+            <!--
+                Core utilities used by other modules.
+                Define this if you use Spring Utility APIs (org.springframework.core.*/org.springframework.util.*)
+            -->
+            <!-- dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>${spring.version}</version>
+            </dependency -->
+			 
+            <!--
+                Expression Language (depends on spring-core)
+                Define this if you use Spring Expression APIs (org.springframework.expression.*)
+            -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-expression</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+			 
+            <!--
+                Bean Factory and JavaBeans utilities (depends on spring-core)
+                Define this if you use Spring Bean APIs (org.springframework.beans.*)
+            -->
+            <!-- dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-beans</artifactId>
+                <version>${spring.version}</version>
+            </dependency -->
+			 
+            <!--
+                Aspect Oriented Programming (AOP) Framework (depends on spring-core, spring-beans)
+                Define this if you use Spring AOP APIs (org.springframework.aop.*)
+                Talend esb has an exclusion for com.springsource.org.aopalliance
+
+            -->
+            <!-- dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aop</artifactId>
+                <version>${spring.version}</version>
+            </dependency -->
+	
+            <!-- this seems necessary beause exclusion of commons logging is 
+            _not_ provided by the apache esb imports --> 
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${spring.version}</version>
+                <exclusions>
+                    <!-- exclude Apache Commons-Logging since we will use SLF4J -->
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>log4j</artifactId>
+                        <groupId>log4j</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>servlet-api</artifactId>
+                        <groupId>javax.servlet</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>logkit</artifactId>
+                        <groupId>logkit</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>avalon-framework</artifactId>
+                        <groupId>avalon-framework</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <!--
+                Various Application Context utilities, including EhCache, JavaMail, Quartz, and Freemarker integration
+                Define this if you need any of these integrations
+            -->
+            <!-- dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context-support</artifactId>
+                <version>${spring.version}</version>
+            </dependency -->
+			 
+            <!--
+                Transaction Management Abstraction (depends on spring-core, spring-beans, spring-aop, spring-context)
+                Define this if you use Spring Transactions or DAO Exception Hierarchy
+                (org.springframework.transaction.*/org.springframework.dao.*)
+            -->
+            <!-- dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-tx</artifactId>
+                <version>${spring.version}</version>
+            </dependency -->
+			 
+            <!--
+                JDBC Data Access Library (depends on spring-core, spring-beans, spring-context, spring-tx)
+                Define this if you use Spring's JdbcTemplate API (org.springframework.jdbc.*)
+            -->
+            <!-- dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jdbc</artifactId>
+                <version>${spring.version}</version>
+            </dependency -->
+			 
+            <!--
+                Object-to-Relation-Mapping (ORM) integration with Hibernate, JPA, and iBatis.
+                (depends on spring-core, spring-beans, spring-context, spring-tx)
+                Define this if you need ORM (org.springframework.orm.*)
+            -->
+            <!-- dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-orm</artifactId>
+                <version>${spring.version}</version>
+            </dependency -->
+			 
+            <!--
+                Object-to-XML Mapping (OXM) abstraction and integration with JAXB, JiBX, Castor, XStream, and XML Beans.
+                (depends on spring-core, spring-beans, spring-context)
+                Define this if you need OXM (org.springframework.oxm.*)
+            -->
+            <!-- dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-oxm</artifactId>
+                <version>${spring.version}</version>
+            </dependency -->
+			 
+            <!--
+                Web application development utilities applicable to both Servlet and Portlet Environments
+                (depends on spring-core, spring-beans, spring-context)
+                Define this if you use Spring MVC, or wish to use Struts, JSF, or another web framework with Spring (org.springframework.web.*)
+            -->
+            <!-- dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
+                <version>${spring.version}</version>
+            </dependency -->
+			 
+            <!--
+                Spring MVC for Servlet Environments (depends on spring-core, spring-beans, spring-context, spring-web)
+                Define this if you use Spring MVC with a Servlet Container such as Apache Tomcat (org.springframework.web.servlet.*)
+            -->
+            <!-- dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
+                <version>${spring.version}</version>
+            </dependency -->
+			 
+            <!--
+                Spring MVC for Portlet Environments (depends on spring-core, spring-beans, spring-context, spring-web)
+                Define this if you use Spring MVC with a Portlet Container (org.springframework.web.portlet.*)
+            -->
+            <!-- dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc-portlet</artifactId>
+                <version>${spring.version}</version>
+            </dependency -->
+			 
+            <!--
+                Support for testing Spring applications with tools such as JUnit and TestNG
+                This artifact is generally always defined with a 'test' scope for the integration testing framework and unit testing stubs
+            -->
+            <!-- effective pom for talend esb does not set test scope -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${spring.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- end Spring -->
+
+            <!-- the order is important.  This should come after the other 
+            more specific subcomponent overrides above
+            -->
+            <dependency>
+                <groupId>com.talend.platform</groupId>
+                <artifactId>apache-esb</artifactId>
+                <version>${tesb.version}-SNAPSHOT</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>javax</groupId>
+                <artifactId>javaee-web-api</artifactId>
+                <version>${javaee-web-api.version}</version>
+            </dependency>        
+        </dependencies>
+    </dependencyManagement>
+    
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>maven-bundle-plugin</artifactId>
+                    <version>${maven-bundle-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>${maven-war-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.tomcat.maven</groupId>
+                    <artifactId>tomcat7-maven-plugin</artifactId>
+                    <version>${tomcat-maven-plugin.version}</version>               
+                </plugin>
+                <plugin>
+                    <groupId>org.mortbay.jetty</groupId>
+                    <artifactId>jetty-maven-plugin</artifactId>
+                    <version>${jetty-maven-plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>
